@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains subpages.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function subpages_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the subpages module.
+    case 'help.page.subpages':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Subpages module allows users to creates node&#039;s subpages based on view modes') . '</p>';
+      return $output;
+
+    default:
+  }
+}

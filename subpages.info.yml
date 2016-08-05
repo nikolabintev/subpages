@@ -1,0 +1,5 @@
+name: Subpages
+type: module
+description: Subpages module allows users to create node's subpages based on view modes
+core: 8.x
+package: Custom
