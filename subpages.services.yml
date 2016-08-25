@@ -1,0 +1,4 @@
+services:
+  subpages.manager:
+    class: Drupal\subpages\SubpagesManager
+    arguments: ['@entity.manager', '@config.factory']
