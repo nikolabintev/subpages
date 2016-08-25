@@ -1,0 +1,5 @@
+subpages.admin_add:
+  route_name: subpages.add_subpage_form
+  title: 'Add subpage'
+  appears_on:
+    - subpages.subpages_controller_subpages
