@@ -1,0 +1,17 @@
+subpages.subpages_controller_subpages:
+  path: '/admin/structure/types/manage/{node_type}/subpages'
+  defaults:
+    _controller: '\Drupal\subpages\Controller\SubpagesController::subpages'
+    _title: 'Subpages'
+  requirements:
+    _permission: 'access content'
+
+subpages.add_subpage_form:
+  path: '/admin/structure/types/manage/{node_type}/subpages/add'
+  defaults:
+    _form: '\Drupal\subpages\Form\AddSubpageForm'
+    _title: 'AddSubpageForm'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
