@@ -8,11 +8,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\subpages\SubpagesManager;
 
 /**
- * Class AddSubpageForm.
+ * Class DeleteSubpageForm.
  *
  * @package Drupal\subpages\Form
  */
-class AddSubpageForm extends FormBase {
+class DeleteSubpageForm extends FormBase {
 
   /**
    * Drupal\subpages\SubpagesManager definition.
@@ -20,7 +20,6 @@ class AddSubpageForm extends FormBase {
    * @var \Drupal\subpages\SubpagesManager
    */
   protected $subpagesManager;
-  private $node_type;
 
   public function __construct(SubpagesManager $subpages_manager) {
     $this->subpagesManager = $subpages_manager;
@@ -36,38 +35,35 @@ class AddSubpageForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'add_subpage_form';
+    return 'delete_subpage_form';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $node_type = NULL) {
-    $this->node_type = $node_type;
-    $view_modes = $this->subpagesManager->getViewModes($node_type);
+  public function buildForm(array $form, FormStateInterface $form_state, $node_type = NULL, $subpage = NULL) {
+    echo $node_type;
+    echo $subpage;
+
+    $form['node_type'] = [
+      '#type' => 'hidden',
+      '#value' => $node_type,
+    ];
 
     $form['subpage'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Subpage configuration'),
-    ];
-
-    $form['subpage']['title'] = [
-      '#title' => $this->t('Title:'),
-      '#description' => $this->t('The title of the subpage.'),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-    ];
-
-    $form['subpage']['view_mode'] = [
-      '#title' => $this->t('View Mode:'),
-      '#type' => 'select',
-      '#options' => $view_modes,
+      '#type' => 'hidden',
+      '#value' => $subpage,
     ];
 
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => 'Save page'
+      '#value' => t('Delete'),
     ];
+    $form['cancel'] = [
+      '#type' => 'link',
+      '#value' => t('Cancel'),
+    ];
+
     return $form;
   }
 
@@ -82,15 +78,12 @@ class AddSubpageForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $title = $form_state->getValue('title');
-    $view_mode = $form_state->getValue('view_mode');
+    // Display result.
+    foreach ($form_state->getValues() as $key => $value) {
+        drupal_set_message($key . ': ' . $value);
+    }
 
-    $subpage = [
-      'title' => $title,
-      'view_mode' => $view_mode,
-    ];
-
-    $this->subpagesManager->addSubpage($this->node_type, $subpage);
-    $form_state->setRedirect('subpages.list', ['node_type' => $this->node_type]);
+    $this->subpagesManager->deleteSubpage($form_state->getValue('node_type'), $form_state->getValue('subpage'));
   }
+
 }

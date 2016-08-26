@@ -1,4 +1,4 @@
-subpages.subpages_controller_subpages:
+subpages.list:
   path: '/admin/structure/types/manage/{node_type}/subpages'
   defaults:
     _controller: '\Drupal\subpages\Controller\SubpagesController::subpages'
@@ -6,8 +6,8 @@ subpages.subpages_controller_subpages:
   requirements:
     _permission: 'access content'
 
-subpages.add_subpage_form:
-  path: '/admin/structure/types/manage/{node_type}/subpages/add'
+subpages.create:
+  path: '/admin/structure/types/manage/{node_type}/subpages/create'
   defaults:
     _form: '\Drupal\subpages\Form\AddSubpageForm'
     _title: 'Create subpage'
@@ -15,3 +15,12 @@ subpages.add_subpage_form:
     _permission: 'access administration pages'
   options:
     _admin_route: TRUE
+
+subpages.delete:
+  path: '/admin/structure/types/manage/{node_type}/subpages/delete/{subpage}'
+  defaults:
+    _form: '\Drupal\subpages\Form\DeleteSubpageForm'
+    _title: 'Delete subpage'
+  requirements:
+    _access: 'TRUE'
+  

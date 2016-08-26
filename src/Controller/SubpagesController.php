@@ -3,6 +3,7 @@
 namespace Drupal\subpages\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\subpages\SubpagesManager;
 
@@ -68,6 +69,26 @@ class SubpagesController extends ControllerBase
       $row['data']['subpage'] = $subpage['title'];
       $row['data']['view_mode'] = $subpage['view_mode'];
 
+
+      $operations = array();
+      /*
+      $operations['edit'] = array(
+        'title' => $this->t('Edit'),
+        'url' => Url::fromRoute('path.admin_edit', ['pid' => $data->pid], ['query' => $destination]),
+      );
+      */
+      $operations['delete'] = [
+        'title' => $this->t('Delete'),
+        'url' => \Drupal\Core\Url::fromRoute('subpages.delete', ['node_type' => $node_type, 'subpage' => 'home']),
+      ];
+
+      $row['data']['operations'] = array(
+        'data' => array(
+          '#type' => 'operations',
+          '#links' => $operations,
+        ),
+      );
+
       $rows[] = $row;
     }
     $build['subpages'] = array(
@@ -78,5 +99,16 @@ class SubpagesController extends ControllerBase
     );
 
     return $build;
+  }
+
+  /**
+   * Deletes sub-page
+   * @param $node_type
+   *  The node type on which the sub-page appears.
+   * @param $subpage
+   *  The sub-page to delete.
+   */
+  public function delete($node_type, $subpage) {
+    echo 5;
   }
 }

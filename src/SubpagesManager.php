@@ -64,5 +64,9 @@ class SubpagesManager implements SubpagesManagerInterface {
       ->set($node_type . '.' . strtolower(str_replace(' ', '_', $subpage['title'])). '.title', $subpage['title'])
       ->set($node_type . '.' . strtolower(str_replace(' ', '_', $subpage['title'])). '.view_mode', $subpage['view_mode'])
       ->save();
-    }
+  }
+
+  public function deleteSubpage($node_type, $subpage) {
+    
+  }
 }

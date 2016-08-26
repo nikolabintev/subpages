@@ -1,5 +1,5 @@
 subpages:
-  route_name: subpages.subpages_controller_subpages
+  route_name: subpages.list
   base_route: entity.node_type.edit_form
   title: 'Subpages'
   weight: 20
