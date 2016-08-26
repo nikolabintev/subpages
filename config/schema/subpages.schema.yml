@@ -1,0 +1,20 @@
+# Schema for the sub-pages configuration of the Subpages module.
+
+subpages.settings:
+  type: config_object
+  label: 'Subpages settings'
+  mapping:
+    node_type:
+      type: sequence
+      label: 'Node type'
+      mapping:
+        subpage:
+          type: sequence
+          label: 'Subpage'
+          mapping:
+            title:
+              type: string
+              label: 'Subpage title'
+            view_mode:
+              type: string
+              label: 'View mode'
