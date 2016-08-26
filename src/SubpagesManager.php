@@ -17,6 +17,7 @@ class SubpagesManager implements SubpagesManagerInterface {
    * @var \Drupal\Core\Config\Config
    */
   private $configFactory;
+  private $config;
   private $entityManager;
 
   /**
@@ -25,10 +26,10 @@ class SubpagesManager implements SubpagesManagerInterface {
   public function __construct(EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory) {
     $this->entityManager = $entityManager;
     $this->configFactory = $configFactory;
-    /*
-    $this->config_factory = $config_factory
-      ->getEditable('exclude_view_title.settings');
-    */
+
+    $this->config = $configFactory
+      ->getEditable('subpages.settings');
+
   }
 
   /**
@@ -51,36 +52,17 @@ class SubpagesManager implements SubpagesManagerInterface {
       }
     }
 
-    $a = 5;
     return $view_modes;
-
-      /*
-    $definitions = [];
-
-    foreach ($this->entityManager->getDefinitions() as $entity_type => $definition) {
-      if ($definition->isSubclassOf('Drupal\Core\Config\Entity\ConfigEntityInterface')) {
-        if ($definition->getBundleOf()) {
-          $definitions[$entity_type] = $definition;
-        }
-      }
-    }
-    $entity_types = array_map(function (EntityTypeInterface $definition) {
-      return $definition->getLabel();
-    }, $definitions);
-    // Sort the entity types by label, then add the simple config to the top.
-    uasort($entity_types, 'strnatcasecmp');
-
-    return $entity_types;
-      */
   }
 
   public function getSubpages($node_type) {
-    $config = $this->configFactory->getEditable('subpages.AddSubpage');
-    $subpages = [];
-
-    $subpages = $config->get($node_type);
-
-    $a =5;
-    return $subpages;
+    return $this->config->get($node_type);
   }
+
+  public function addSubpage($node_type, $subpage) {
+    $this->config
+      ->set($node_type . '.' . strtolower(str_replace(' ', '_', $subpage['title'])). '.title', $subpage['title'])
+      ->set($node_type . '.' . strtolower(str_replace(' ', '_', $subpage['title'])). '.view_mode', $subpage['view_mode'])
+      ->save();
+    }
 }

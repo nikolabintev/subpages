@@ -63,7 +63,7 @@ class SubpagesController extends ControllerBase
 
     $subpages = $this->subpagesManager->getSubpages($node_type);
 
-    foreach ($subpages as $key => $subpage) {
+    foreach ($subpages as $subpage) {
       $row = [];
       $row['data']['subpage'] = $subpage['title'];
       $row['data']['view_mode'] = $subpage['view_mode'];
@@ -75,7 +75,6 @@ class SubpagesController extends ControllerBase
       '#header' => $header,
       '#rows' => $rows,
       '#empty' => $this->t('No sub-pages available for this node type'),
-//      '#empty' => $this->t('No URL aliases available. <a href=":link">Add URL alias</a>.', array(':link' => $this->url('path.admin_add'))),
     );
 
     return $build;

@@ -10,7 +10,7 @@ subpages.add_subpage_form:
   path: '/admin/structure/types/manage/{node_type}/subpages/add'
   defaults:
     _form: '\Drupal\subpages\Form\AddSubpageForm'
-    _title: 'Add subpage'
+    _title: 'Create subpage'
   requirements:
     _permission: 'access administration pages'
   options:
